@@ -28,9 +28,13 @@ export const getPostp = async (req, res) => {
 }
 
 export const createPostp = async (req, res) => {
-    const { namaPegawai, usia, noPegawai, selectedFile } = req.body;
+    //const { namaPegawai, usia, noPegawai, selectedFile } = req.body;
 
-    const newPostPegawai = new PostPegawai({ namaPegawai, usia, noPegawai, selectedFile })
+    //const newPostPegawai = new PostPegawai({ namaPegawai, usia, noPegawai, selectedFile })
+
+    const postp = req.body;
+
+    const newPostPegawai = new PostPegawai({ ...postp, creator: req.userId, createdAt: new Date().toISOString() });
 
     try {
         await newPostPegawai.save();
@@ -43,16 +47,15 @@ export const createPostp = async (req, res) => {
 
 export const updatePostp = async (req, res) => {
     const { id } = req.params;
-    const { namaPegawai, usia, noPegawai, selectedFile } = req.body;
+    const { namaPegawai, creator, usia, noPegawai, selectedFile } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedPostp = { namaPegawai, usia, noPegawai, selectedFile, _id: id };
+    const updatedPostp = { creator, namaPegawai, usia, noPegawai, selectedFile, _id: id };
 
     await PostPegawai.findByIdAndUpdate(id, updatedPostp, { new: true });
 
     res.json(updatedPostp);
-    console.log(updatedPostp);
 }
 
 export const deletePostp = async (req, res) => {

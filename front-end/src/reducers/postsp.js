@@ -7,7 +7,7 @@ export default (postsp = [], actions) => {
         case CREATE:
             return [...postsp, actions.payload];
         case UPDATE:
-            return postsp.map((postp) => postp._id === actions.payload._id ? actions.payload : postp );
+            return postsp.map((postp) => (postp._id === actions.payload._id ? actions.payload : postp ));
         case DELETE:
             return postsp.filter((postp)=> postp._id !== actions.payload);
         default:

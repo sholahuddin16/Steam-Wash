@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import postpRoutes from './routes/postsp.js'
+import postRoutes from './routes/posts.js'
 import userRoutes from './routes/users.js'
 
 const app = express();
@@ -13,7 +14,10 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 app.use('/pegawai', postpRoutes);
+
 app.use('/users', userRoutes);
+
+app.use('/pelanggan', postRoutes);
 
 const CONNECTION_URL = 'mongodb+srv://msholahuddin91:kincir1545@cluster0.l61ft.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;

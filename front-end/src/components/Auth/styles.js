@@ -17,6 +17,18 @@ export default makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  image: {
+    marginLeft: '10px',
+    marginTop: '5px',
+  },
+  fileInput: {
+    width: '97%',
+    margin: '10px 0',
+    padding: '0px 10px',
+  },
+  Texttt: {
+    padding: '8px 8px',
+  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),

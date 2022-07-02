@@ -9,27 +9,29 @@ export const getPostsp = () => async (dispatch) => {
     } catch (error) {
         console.log(error.message)
     }
-}
+};
 
-export const createPostp = (post) => async (dispatch) => {
+export const createPostp = (postp) => async (dispatch) => {
     try {
-        const { data } = await api.createPostp(post);
+        const { data } = await api.createPostp(postp);
 
         dispatch({ type: CREATE, payload: data });
+        console.log("berhasil menambahkan")
     } catch (error) {
         console.log(error.message);
     }
-}
+};
 
 export const updatePostp = (id, postp) => async (dispatch) => {
     try {
         const { data } = await api.updatePostp(id, postp);
 
         dispatch({ type: UPDATE, payload: data });
+        console.log("berhasil edit data")
     } catch (error) {
         console.log(error.message)
     }
-}
+};
 
 export const deletePostp = (id) => async (dispatch) => {
     try {
@@ -39,4 +41,4 @@ export const deletePostp = (id) => async (dispatch) => {
     } catch (error) {
         console.log(error)
     }
-}
+};
