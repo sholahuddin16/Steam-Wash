@@ -15,7 +15,7 @@ const Paginate = () => {
             variant="outlined"
             color="primary"
             renderItem={(item) => (
-                <PaginationItem {...item} component={Link} to={`/postsp?page=${1}`} /> 
+                <PaginationItem {...item} component={Link} to={`/pelanggan?page=${1}`} /> 
             )}
         />
     );

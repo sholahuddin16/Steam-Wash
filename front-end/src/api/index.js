@@ -18,7 +18,8 @@ export const deletePostp = (id) => API.delete(`/pegawai/${id}`);
 export const updatePostp = (id, updatePostp) => API.patch(`/pegawai/${id}`, updatePostp);
 
 export const fetchPosts = () => API.get('/pelanggan');
-export const fetchPostsById = (id) => API.get(`/pelanggan/${id}`);
+export const fetchPostsBySearch = (searchQuery) => API.get(`/pelanggan/search?searchQuery=${searchQuery.search  || 'none'}`);
+export const fetchPost = (id) => API.get(`/pelanggan/${id}`);
 export const createPost = (newPost) => API.post('/pelanggan', newPost);
 export const deletePost = (id) => API.delete(`/pelanggan/${id}`);
 export const updatePost = (id, updatePost) => API.patch(`/pelanggan/${id}`, updatePost);

@@ -14,6 +14,12 @@ export default makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
+  appBarSearch: {
+    borderRadius: 4,
+    marginBottom: '1rem',
+    display: 'flex',
+    padding: '16px',
+  },
   appBarrrr: {
     margin: '30px 0',
     borderRadius: 15,

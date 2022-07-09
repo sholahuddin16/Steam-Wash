@@ -15,6 +15,21 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery } = req.query
+
+    try {
+        const namaPelanggan =  new RegExp(searchQuery, 'i');
+
+        const posts = await PostPelanggan.find({ $or: [ { namaPelanggan }] });
+
+        res.json({ data: posts });
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const getPost = async (req, res) => {
     const { id: _id } = req.params;
 

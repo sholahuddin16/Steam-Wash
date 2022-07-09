@@ -13,6 +13,7 @@ import FormAdmin from './components/FormPelanggan/FormAdmin';
 import pagePelanggan from './components/PagePelanggan/pagePelanggan';
 import pageTransaksi from './components/PageTransaksi/pageTransaksi';
 import EditPelanggan from './components/EditPelanggan/EditPelanggan';
+import PelangganDetails from './components/PelangganDetails/PelangganDetails';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -28,9 +29,11 @@ const App = () => {
                 <Route path='/postsp/search' exact component={pagePegawai} />
                 <Route path="/postsp/:id" component={PostpDetails} />
                 <Route path='/pelanggan' exact component={pagePelanggan} />
+                <Route path='/pelanggan/search' exact component={pagePelanggan} />
+                <Route path='/pelanggan/:id' exact component={PelangganDetails} />
                 <Route path='/posts/search' exact component={pagePelanggan} />
                 <Route path="/posts/:id" component={pagePelanggan} />
-                <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/postsp" />)} />
+                <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/pelanggan" />)} />
                 <Route path='/registernyohaka154555' exact component={Register} />
                 <Route path='/formpelanggan' exact component={FormPelanggan} />
                 <Route path='/formpelanggan/:id' exact component={EditPelanggan} />

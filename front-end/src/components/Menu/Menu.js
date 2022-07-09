@@ -8,17 +8,41 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import useStyles from './styles';
+import { getPostsBySearch } from '../../actions/posts';
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 const Menu = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
 
     const classes = useStyles();
+    const query = useQuery();
+    const dispatch = useDispatch();
+    const [search, setSearch] = useState('');
+    const history = useHistory();
+
+    const searchPost = () => {
+        if (search.trim()) {
+            dispatch(getPostsBySearch({ search }));
+            history.push(`/pelanggan/search?searchQuery=${search || 'none'}`);
+        } else {
+            history.push('/');
+        }
+    }
+
+    const handleKeyPress = (e) => {
+        if(e.keyCode === 13){
+            searchPost();
+        }
+    }
 
     return (
         <AppBar className={classes.appBarrrr} position="static" color="inherit">
             <Grow in>
                 <Grid container justify="space-evenly" alignItems="stretch" spacing={2} >
-                    <Grid item md="6">
+                    <Grid item xs={12} sm={6} md={6}>
                         <AppBar className={classes.appBar} position="static" color="inherit">
                             <div className={classes.brandContainer}>
                                 <CardActions className={classes.cardActions} >
@@ -44,14 +68,19 @@ const Menu = () => {
                             </div>
                         </AppBar>
                     </Grid>
-                    <Grid item md={3}>
+                    <Grid item md={2}>
                         <AppBar className={classes.appBar} position="static" color="inherit">
-                            <div className={classes.brandContainer}>
-                                <CardActions className={classes.cardActions} >
-                                    <TextField name="search" variant="outlined" size="small" label="Search " />
-                                    <Button variant="contained" size="small" color="primary">Search</Button>
-                                </CardActions>
-                            </div>
+                            <CardActions className={classes.cardActions} >
+                                <TextField
+                                    name="search"
+                                    variant="outlined"
+                                    size="small"
+                                    label="Search"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                                <Button variant="contained" size="small" color="primary" onClick={searchPost}>Search</Button>
+                            </CardActions>
                         </AppBar>
                     </Grid>
                     <Grid item md={2}>

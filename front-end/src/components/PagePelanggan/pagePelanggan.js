@@ -14,8 +14,8 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-const pagePelanggan = () => {
-    const [currentId, setCurrentId] = useState(null);
+const usePagePelanggan = () => {
+    const [currentId, setCurrentId] = useState(0);
     const dispatch = useDispatch();
     const query = useQuery();
     const history = useHistory();
@@ -24,7 +24,7 @@ const pagePelanggan = () => {
 
     useEffect(() => {
         dispatch(getPosts());
-    }, [dispatch]);
+    }, [currentId, dispatch]);
 
     const classes = useStyles();
 
@@ -51,4 +51,4 @@ const pagePelanggan = () => {
     );
 }
 
-export default pagePelanggan
+export default usePagePelanggan;
