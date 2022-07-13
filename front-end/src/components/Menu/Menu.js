@@ -46,7 +46,7 @@ const Menu = () => {
                         <AppBar className={classes.appBar} position="static" color="inherit">
                             <div className={classes.brandContainer}>
                                 <CardActions className={classes.cardActions} >
-                                    <Button size="small" color="primary" >
+                                    <Button size="small" color="primary" component={Link} to="/pelanggan" >
                                         <HomeIcon fontSize="small" />
                                         Home
                                     </Button>

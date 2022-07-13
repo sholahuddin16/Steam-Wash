@@ -26,11 +26,11 @@ const Formp = ({ currentId, setCurrentId }) => {
 
     if (currentId) {
       dispatch(updatePostp(currentId, { ...postpData, name: user?.result?.name }));
-      history.push('/');
+      history.push('/postsp');
       clear();
     } else {
       dispatch(createPostp({ ...postpData, name: user?.result?.name }));
-      history.push('/');
+      history.push('/postsp');
       clear();
     }
     console.log(postpData);

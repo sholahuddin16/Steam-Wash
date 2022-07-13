@@ -4,6 +4,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
+
 
 import useStyles from './styles';
 import { deletePostp } from '../../../actions/postsp';
@@ -11,7 +13,12 @@ import { deletePostp } from '../../../actions/postsp';
 const Postp = ({ postp, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const history = useHistory();
+
   const user = JSON.parse(localStorage.getItem('profile'));
+
+  const openPost = () => history.push(`/postsp/${postp._id}`);
+
 
   return (
     <Card className={classes.card}>
@@ -43,6 +50,7 @@ const Postp = ({ postp, setCurrentId }) => {
           </Button>
         )}
       </CardActions>
+      <Button variant="contained" size="small" color="primary" fullWidth onClick={openPost}>Selengkapnya</Button>
     </Card>
   )
 }

@@ -17,9 +17,9 @@ export const createPostp = (newPostp) => API.post('/pegawai', newPostp);
 export const deletePostp = (id) => API.delete(`/pegawai/${id}`);
 export const updatePostp = (id, updatePostp) => API.patch(`/pegawai/${id}`, updatePostp);
 
-export const fetchPosts = () => API.get('/pelanggan');
-export const fetchPostsBySearch = (searchQuery) => API.get(`/pelanggan/search?searchQuery=${searchQuery.search  || 'none'}`);
 export const fetchPost = (id) => API.get(`/pelanggan/${id}`);
+export const fetchPosts = (page) => API.get(`/pelanggan?page=${page}`);
+export const fetchPostsBySearch = (searchQuery) => API.get(`/pelanggan/search?searchQuery=${searchQuery.search  || 'none'}`);
 export const createPost = (newPost) => API.post('/pelanggan', newPost);
 export const deletePost = (id) => API.delete(`/pelanggan/${id}`);
 export const updatePost = (id, updatePost) => API.patch(`/pelanggan/${id}`, updatePost);

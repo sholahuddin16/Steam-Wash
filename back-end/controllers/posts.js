@@ -6,10 +6,16 @@ import PostPelanggan from '../models/postPelanggan.js';
 const router = express.Router;
 
 export const getPosts = async (req, res) => {
-    try {
-        const postPelanggan = await PostPelanggan.find();
+    const {page} = req.query;
 
-        res.status(200).json(postPelanggan);
+    try {
+        const LIMIT = 9;
+        const startIndex = (Number(page) -1) * LIMIT; //awal mulai index page
+        const total = await PostPelanggan.countDocuments({});
+
+        const posts = await PostPelanggan.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+
+        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -19,7 +25,7 @@ export const getPostsBySearch = async (req, res) => {
     const { searchQuery } = req.query
 
     try {
-        const namaPelanggan =  new RegExp(searchQuery, 'i');
+        const namaPelanggan =  new RegExp(searchQuery, "i");
 
         const posts = await PostPelanggan.find({ $or: [ { namaPelanggan }] });
 
@@ -31,12 +37,12 @@ export const getPostsBySearch = async (req, res) => {
 }
 
 export const getPost = async (req, res) => {
-    const { id: _id } = req.params;
+    const { id } = req.params;
 
     try {
-        const postPelanggan = await PostPelanggan.findById(_id);
+        const post = await PostPelanggan.findById(id);
 
-        res.status(200).json(postPelanggan);
+        res.status(200).json(post);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

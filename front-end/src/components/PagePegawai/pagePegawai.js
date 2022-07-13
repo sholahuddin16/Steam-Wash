@@ -14,7 +14,7 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
-const pagePegawai = () => {
+const usePagePegawai = () => {
     const [currentId, setCurrentId] = useState(null);
     const dispatch = useDispatch();
     const query = useQuery();
@@ -36,7 +36,6 @@ const pagePegawai = () => {
                 <Grid container justify="space-between" alignItems="stretch" spacing={3} >
                     <Grid item xs={12} sm={6} md={12}>
                         <Formp currentId={currentId} setCurrentId={setCurrentId} />
-
                     </Grid>
                     <Grid item xs={12} sm={6} md={12}>
                         <Postsp setCurrentId={setCurrentId} />
@@ -52,4 +51,4 @@ const pagePegawai = () => {
     );
 }
 
-export default pagePegawai
+export default usePagePegawai;

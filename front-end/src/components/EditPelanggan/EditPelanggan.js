@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Button, Paper, Grid, Typography, Container, TextField, CardActions } from '@material-ui/core';
 
 import useStyles from '../Formp/styles';
@@ -8,37 +8,62 @@ import FileBase from 'react-file-base64';
 
 
 import noteee from '../../images/note.png';
-import { updatePost } from '../../actions/posts.js';
+import axios from 'axios';
+//import { updatePost } from '../../actions/posts.js';
 
-const EditPelanggan = ({ currentId, setCurrentId }) => {
-  const [postData, setPostData] = useState({ namaPelanggan: '', merkMotor: '', plat: '', noPelanggan: '', noSlot: '', statusKendaraan: '', namaPencuci: '', selectedFile: '' });
-  const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const classes = useStyles();
+
+const EditPelanggan = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
-  useEffect(() => {
-    if (post) setPostData(post);
-    
-  }, [post]);
+  const [namaPelanggan, setNamaPelanggan] = useState('');
+  const [noPelanggan, setNoPelanggan] = useState('');
+  const [noSlot, setNoSlot] = useState('');
+  const [statusKendaraan, setStatusKendaraan] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
+  const [merkMotor, setMerkMotor] = useState('');
+  const [plat, setPlat] = useState('');
+  const [namaPencuci, setNamaPencuci] = useState('');
+  const [name, setName] = useState('');
+  const [selectedFile, setSelectedFile] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const history = useHistory();
+  const classes = useStyles();
+  const { id } = useParams();
 
-    if (currentId) {
-      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
-      clear();
-    } 
-
-    console.log(postData);
+  const getPelangganById = async () => {
+    const response = await axios.get(`http://192.168.1.3:5000/pelanggan/${id}`);
+    setNamaPelanggan(response.data.namaPelanggan);
+    setNoPelanggan(response.data.noPelanggan);
+    setNoSlot(response.data.noSlot);
+    setStatusKendaraan(response.data.statusKendaraan);
+    setCreatedAt(response.data.createdAt);
+    setMerkMotor(response.data.merkMotor);
+    setPlat(response.data.plat);
+    setNamaPencuci(response.data.namaPencuci);
+    setName(response.data.name);
+    setSelectedFile(response.data.selectedFile);
   }
 
-  const clear = () => {
-    setCurrentId(null);
-    setPostData({ namaPelanggan: '', merkMotor: '', plat: '', noPelanggan: '', noSlot: '', statusKendaraan: '', namaPencuci: '', selectedFile: '' });
-  };
+  useEffect(() => {
+    getPelangganById();
+  }, []);
+
+  const updatePelanggan = async (e) => {
+    e.preventDefault();
+    await axios.patch(`http://192.168.1.3:5000/pelanggan/${id}`, {
+      namaPelanggan: namaPelanggan,
+      noPelanggan: noPelanggan,
+      noSlot: noSlot,
+      statusKendaraan: statusKendaraan,
+      setMerkMotor: merkMotor,
+      plat: plat,
+      namaPencuci: namaPencuci,
+      selectedFile: selectedFile
+    });
+    history.push("/pelanggan")
+  }
+
 
   return (
     <Container component="main" maxWidth="md" >
@@ -48,35 +73,35 @@ const EditPelanggan = ({ currentId, setCurrentId }) => {
             <img className={classes.image} src={noteee} height="60" />
           </Grid>
           <br />
-          <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+          <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={updatePelanggan}>
             <Typography variant='h6'> Edit Booking Steam </Typography>
             <TextField className={classes.Texttt} name="namaPelanggan" variant="outlined" label='Nama Pelanggan' fullWidth
-              value={postData.namaPelanggan} onChange={(e) => setPostData({ ...postData, namaPelanggan: e.target.value })} />
+              value={namaPelanggan} onChange={(e) => setNamaPelanggan(e.target.value)} />
             <Grid className={classes.GridText} container justify="flex-start" alignItems="stretch" spacing={2} >
               <TextField name="merkMotor" variant="outlined" label='Merk Motor'
-                value={postData.merkMotor} onChange={(e) => setPostData({ ...postData, merkMotor: e.target.value })} />
+                value={merkMotor} onChange={(e) => setMerkMotor(e.target.value)} />
               <TextField name="plat" variant="outlined" label='Plat Nomor'
-                value={postData.plat} onChange={(e) => setPostData({ ...postData, plat: e.target.value })} />
+                value={plat} onChange={(e) => setPlat(e.target.value)} />
             </Grid>
             <TextField className={classes.Texttt} name="noPelanggan" variant="outlined" label='No Telpon' fullWidth
-              value={postData.noPelanggan} onChange={(e) => setPostData({ ...postData, noPelanggan: e.target.value })} />
+                value={noPelanggan} onChange={(e) => setNoPelanggan(e.target.value)} />
             <Grid className={classes.GridText} container justify="flex-start" alignItems="stretch" spacing={2} >
               <TextField name="noSlot" variant="outlined" label='No Slot'
-                value={postData.noSlot} onChange={(e) => setPostData({ ...postData, noSlot: e.target.value })} />
+                value={noSlot} onChange={(e) => setNoSlot(e.target.value)} />
               <TextField name="statusKendaraan" variant="outlined" label='Status Kendaraan'
-                value={postData.statusKendaraan} onChange={(e) => setPostData({ ...postData, statusKendaraan: e.target.value })} />
+                value={statusKendaraan} onChange={(e) => setStatusKendaraan(e.target.value)} />
             </Grid>
             <TextField className={classes.Texttt} name="namaPencuci" variant="outlined" label='Nama Pencuci' fullWidth
-              value={postData.namaPencuci} onChange={(e) => setPostData({ ...postData, namaPencuci: e.target.value })} />
+                value={namaPencuci} onChange={(e) => setNamaPencuci(e.target.value)} />
             <div className={classes.fileInput}>
               <FileBase
                 type="file"
                 multiple={false}
-                onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
+                onDone={({ base64 }) => setSelectedFile({ selectedFile: base64 })}
               />
             </div>
             <Button className={classes.buttonSubmit} variant="contained" color="primary" size="small" type="submit" fullWidth>Submit</Button>
-            <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+            <Button variant="contained" color="secondary" size="small" fullWidth>Clear</Button>
           </form>
         </Paper>
       )}

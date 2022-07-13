@@ -12,7 +12,7 @@ import { createPost, updatePost } from '../../actions/posts.js';
 
 const FormAdmin = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({ namaPelanggan: '', merkMotor: '', plat: '', noPelanggan: '', noSlot: '', statusKendaraan: '', namaPencuci: '', selectedFile: '' });
-  const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
+  const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
 
   const dispatch = useDispatch();
   const history = useHistory();
